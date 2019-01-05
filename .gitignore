@@ -6,3 +6,5 @@ ClipKeeper.Server.WebService/bin/
 ClipKeeper.Server.WebService/obj/
 ClipKeeper.Server.Domain/bin/
 ClipKeeper.Server.WebService/clipkeeper.db
+.vscode/launch.json
+.vscode/
