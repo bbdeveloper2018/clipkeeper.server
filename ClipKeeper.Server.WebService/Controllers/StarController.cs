@@ -22,7 +22,7 @@ namespace ClipKeeper.Server.WebService.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _context.Stars.ToListAsync());
+            return Ok(await _context.Performers.ToListAsync());
         }
 
        

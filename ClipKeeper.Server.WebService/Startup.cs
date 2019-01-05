@@ -14,6 +14,10 @@ using Microsoft.EntityFrameworkCore;
 using ClipKeeper.Server.Data;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using Microsoft.AspNetCore.Http.Features;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using AutoMapper;
 
 namespace ClipKeeper.Server.WebService
 {
@@ -34,14 +38,28 @@ namespace ClipKeeper.Server.WebService
             services.AddDbContext<ClipKeeperContext>(
                 options => options.UseSqlite(
                     Configuration.GetConnectionString("ClipKeeperDbConnection")));
+
+            services.AddAutoMapper();
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.Configure<FormOptions>(x =>
+            {
+                x.ValueLengthLimit = int.MaxValue;
+                x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            var clipsPath = Path.Combine(env.ContentRootPath, "clips");
+            //var staticPath = Path.Combine(env.ContentRootPath, "static");
+            //var staticPath = "F:\\Bluebird";
+            var staticPath = Configuration.GetSection("StaticPath").Value;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -57,18 +75,17 @@ namespace ClipKeeper.Server.WebService
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClipKeeperContext>();
                 context.Database.EnsureCreated();
             }
-
             
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(clipsPath),
+                FileProvider = new PhysicalFileProvider(staticPath),
                 RequestPath = "/static"
             });
 
             app.UseDirectoryBrowser(new DirectoryBrowserOptions
             {
-                FileProvider = new PhysicalFileProvider(clipsPath),
+                FileProvider = new PhysicalFileProvider(staticPath),
                 RequestPath = "/static"
             });
 
