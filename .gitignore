@@ -6,3 +6,6 @@ ClipKeeper.Server.WebService/bin/
 ClipKeeper.Server.WebService/obj/
 ClipKeeper.Server.Domain/bin/
 ClipKeeper.Server.WebService/clipkeeper.db
+.vscode/
+ClipKeeper.Server.WebService/static/previews/The.Tonight.Show.Starring.Jimmy.Fallon.2014.02.18.Jerry.Seinfeld.HDTV.x264-2HD_preview.mp4
+ClipKeeper.Server.WebService/static/
