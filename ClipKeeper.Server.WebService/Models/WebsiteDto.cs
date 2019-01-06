@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace ClipKeeper.Server.WebService.Models
 {
-    public class ImageDto
+    public class WebsiteDto
     {
-        public string ImagePath { get; set; }
-        public bool IsPrimary { get; set; }
+        public int WebsiteId { get; set; }
+        public string Name { get; set; }
+        public string SiteUrl { get; set; }
     }
 }

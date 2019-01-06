@@ -12,7 +12,10 @@ namespace ClipKeeper.Server.WebService.Profiles
     {
         public DvdProfile()
         {
-            CreateMap<Dvd, DvdDto>();
+            CreateMap<Dvd, DvdDto>()
+                .ForMember(
+                    dest => dest.StudioName,
+                    opt => opt.MapFrom(src => src.Studio.Name));
         }
     }
 }

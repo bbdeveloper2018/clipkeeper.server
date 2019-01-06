@@ -13,6 +13,7 @@ namespace ClipKeeper.Server.Domain
         public string PosterImagePath { get; set; }
         public int Rating { get; set; }
         public Dvd Dvd { get; set; }
+        public Website Website { get; set; }
         public List<PerformerVideo> PerformerVideos { get; set; }
         public List<VideoTag> VideoTags { get; set; }
         public DateTime CreateDate { get; set; }

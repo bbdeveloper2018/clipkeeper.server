@@ -12,16 +12,13 @@ namespace ClipKeeper.Server.WebService.Profiles
     {
         public VideoProfile()
         {
-            //Mapper.Initialize(m => {
-            //    m.CreateMap<Video, VideoDto>()
-            //        .Include<Tag, TagDto>();
-            //    m.CreateMap<Tag, TagDto>();
-            //});
-
             CreateMap<Video, VideoDto>()
                 .ForMember(
                     dest => dest.Dvd,
                     opt => opt.MapFrom(src => src.Dvd))
+                .ForMember(
+                    dest => dest.Website,
+                    opt => opt.MapFrom(src => src.Website))
                 .ForMember(
                     dest => dest.Performers,
                     opt => opt.MapFrom(src =>

@@ -31,8 +31,8 @@ namespace ClipKeeper.Server.Data.Migrations
                     Notes = table.Column<string>(nullable: true),
                     Rating = table.Column<int>(nullable: false),
                     Gender = table.Column<string>(nullable: true),
-                    CreateDate = table.Column<DateTime>(nullable: false),
-                    UpdateStamp = table.Column<DateTime>(nullable: false)
+                    CreateDate = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    UpdateStamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -46,8 +46,8 @@ namespace ClipKeeper.Server.Data.Migrations
                     StudioId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
-                    CreateDate = table.Column<DateTime>(nullable: false),
-                    UpdateStamp = table.Column<DateTime>(nullable: false)
+                    CreateDate = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    UpdateStamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -65,6 +65,20 @@ namespace ClipKeeper.Server.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tag", x => x.TagId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Website",
+                columns: table => new
+                {
+                    WebsiteId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: true),
+                    SiteUrl = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Website", x => x.WebsiteId);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,8 +118,8 @@ namespace ClipKeeper.Server.Data.Migrations
                     FrontCoverPath = table.Column<string>(nullable: true),
                     BackCoverPath = table.Column<string>(nullable: true),
                     Rating = table.Column<int>(nullable: false),
-                    CreateDate = table.Column<DateTime>(nullable: false),
-                    UpdateStamp = table.Column<DateTime>(nullable: false)
+                    CreateDate = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    UpdateStamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -130,8 +144,9 @@ namespace ClipKeeper.Server.Data.Migrations
                     PosterImagePath = table.Column<string>(nullable: true),
                     Rating = table.Column<int>(nullable: false),
                     DvdId = table.Column<int>(nullable: true),
-                    CreateDate = table.Column<DateTime>(nullable: false),
-                    UpdateStamp = table.Column<DateTime>(nullable: false)
+                    WebsiteId = table.Column<int>(nullable: true),
+                    CreateDate = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    UpdateStamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -141,6 +156,12 @@ namespace ClipKeeper.Server.Data.Migrations
                         column: x => x.DvdId,
                         principalTable: "Dvd",
                         principalColumn: "DvdId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Video_Website_WebsiteId",
+                        column: x => x.WebsiteId,
+                        principalTable: "Website",
+                        principalColumn: "WebsiteId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -213,6 +234,11 @@ namespace ClipKeeper.Server.Data.Migrations
                 column: "DvdId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Video_WebsiteId",
+                table: "Video",
+                column: "WebsiteId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_VideoTag_TagId",
                 table: "VideoTag",
                 column: "TagId");
@@ -243,6 +269,9 @@ namespace ClipKeeper.Server.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Dvd");
+
+            migrationBuilder.DropTable(
+                name: "Website");
 
             migrationBuilder.DropTable(
                 name: "Studio");

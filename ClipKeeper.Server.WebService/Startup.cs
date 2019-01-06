@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using AutoMapper;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ClipKeeper.Server.WebService
 {
@@ -40,7 +41,7 @@ namespace ClipKeeper.Server.WebService
                     Configuration.GetConnectionString("ClipKeeperDbConnection")));
 
             services.AddAutoMapper();
-            
+
             services.AddMvc()
                 .AddJsonOptions(options => {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -51,6 +52,20 @@ namespace ClipKeeper.Server.WebService
             {
                 x.ValueLengthLimit = int.MaxValue;
                 x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart
+            });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.IncludeXmlComments(GetXmlCommentsPath());
+
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "ClipKeeper API",
+                    Description = "API service for ClipKeeper",
+                    TermsOfService = "None",
+                    Contact = new Contact() { Name="Bluebird Developer", Email = "bbdeveloper2018@gmail.com" }
+                });
             });
         }
 
@@ -91,6 +106,17 @@ namespace ClipKeeper.Server.WebService
 
             app.UseHttpsRedirection();
             app.UseMvc();
-        }        
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ClipKeeper API V1");
+            });
+        }
+
+        private string GetXmlCommentsPath()
+        {
+            var baseDir = AppContext.BaseDirectory;
+            return Path.Combine(baseDir, "ClipKeeperSwagger.xml");
+        }
     }
 }

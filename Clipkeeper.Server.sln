@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipKeeper.Server.Domain", "ClipKeeper.Server.Domain\ClipKeeper.Server.Domain.csproj", "{716D959F-071E-4FF4-8BD5-5580FDAFE23B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClipKeeper.Server.Domain", "ClipKeeper.Server.Domain\ClipKeeper.Server.Domain.csproj", "{716D959F-071E-4FF4-8BD5-5580FDAFE23B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipKeeper.Server.Data", "ClipKeeper.Server.Data\ClipKeeper.Server.Data.csproj", "{7C1D0B7E-E36D-4E49-9036-79A5F30ED9A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClipKeeper.Server.Data", "ClipKeeper.Server.Data\ClipKeeper.Server.Data.csproj", "{7C1D0B7E-E36D-4E49-9036-79A5F30ED9A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipKeeper.Server.WebService", "ClipKeeper.Server.WebService\ClipKeeper.Server.WebService.csproj", "{56528287-3597-45C5-BB72-2AF2275EA2DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClipKeeper.Server.WebService", "ClipKeeper.Server.WebService\ClipKeeper.Server.WebService.csproj", "{56528287-3597-45C5-BB72-2AF2275EA2DC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{263A93D2-9761-4688-AB82-062D105067C5}"
+	ProjectSection(SolutionItems) = preProject
+		SeedData.sql = SeedData.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

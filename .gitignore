@@ -8,3 +8,5 @@ ClipKeeper.Server.WebService/obj/
 ClipKeeper.Server.Domain/bin/
 ClipKeeper.Server.WebService/clipkeeper.db
 ClipKeeper.Server.WebService/static/
+ClipKeeper.Server.WebService/ClipKeeper.Server.WebService.csproj.user
+ClipKeeper.Server.WebService/Debug/

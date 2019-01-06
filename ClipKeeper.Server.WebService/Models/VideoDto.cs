@@ -14,6 +14,7 @@ namespace ClipKeeper.Server.WebService.Models
         public string PosterImagePath { get; set; }
         public int Rating { get; set; }
         public DvdDto Dvd { get; set; }
+        public WebsiteDto Website { get; set; }
         public List<PerformerDto> Performers { get; set; }
         public List<TagDto> Tags { get; set; }
         public DateTime CreateDate { get; set; }

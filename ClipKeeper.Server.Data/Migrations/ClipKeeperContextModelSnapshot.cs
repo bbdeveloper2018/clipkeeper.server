@@ -14,7 +14,7 @@ namespace ClipKeeper.Server.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
 
             modelBuilder.Entity("ClipKeeper.Server.Domain.Dvd", b =>
                 {
@@ -23,7 +23,9 @@ namespace ClipKeeper.Server.Data.Migrations
 
                     b.Property<string>("BackCoverPath");
 
-                    b.Property<DateTime>("CreateDate");
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("FrontCoverPath");
 
@@ -37,7 +39,9 @@ namespace ClipKeeper.Server.Data.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<DateTime>("UpdateStamp");
+                    b.Property<DateTime>("UpdateStamp")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("DvdId");
 
@@ -65,7 +69,9 @@ namespace ClipKeeper.Server.Data.Migrations
                     b.Property<int>("PerformerId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreateDate");
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Gender");
 
@@ -75,7 +81,9 @@ namespace ClipKeeper.Server.Data.Migrations
 
                     b.Property<int>("Rating");
 
-                    b.Property<DateTime>("UpdateStamp");
+                    b.Property<DateTime>("UpdateStamp")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("PerformerId");
 
@@ -113,11 +121,15 @@ namespace ClipKeeper.Server.Data.Migrations
                     b.Property<int>("StudioId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreateDate");
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Name");
 
-                    b.Property<DateTime>("UpdateStamp");
+                    b.Property<DateTime>("UpdateStamp")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("StudioId");
 
@@ -141,7 +153,9 @@ namespace ClipKeeper.Server.Data.Migrations
                     b.Property<int>("VideoId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreateDate");
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<int?>("DvdId");
 
@@ -155,11 +169,17 @@ namespace ClipKeeper.Server.Data.Migrations
 
                     b.Property<int>("Rating");
 
-                    b.Property<DateTime>("UpdateStamp");
+                    b.Property<DateTime>("UpdateStamp")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int?>("WebsiteId");
 
                     b.HasKey("VideoId");
 
                     b.HasIndex("DvdId");
+
+                    b.HasIndex("WebsiteId");
 
                     b.ToTable("Video");
                 });
@@ -175,6 +195,20 @@ namespace ClipKeeper.Server.Data.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("VideoTag");
+                });
+
+            modelBuilder.Entity("ClipKeeper.Server.Domain.Website", b =>
+                {
+                    b.Property<int>("WebsiteId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("SiteUrl");
+
+                    b.HasKey("WebsiteId");
+
+                    b.ToTable("Website");
                 });
 
             modelBuilder.Entity("ClipKeeper.Server.Domain.Dvd", b =>
@@ -215,6 +249,10 @@ namespace ClipKeeper.Server.Data.Migrations
                     b.HasOne("ClipKeeper.Server.Domain.Dvd", "Dvd")
                         .WithMany()
                         .HasForeignKey("DvdId");
+
+                    b.HasOne("ClipKeeper.Server.Domain.Website", "Website")
+                        .WithMany()
+                        .HasForeignKey("WebsiteId");
                 });
 
             modelBuilder.Entity("ClipKeeper.Server.Domain.VideoTag", b =>
